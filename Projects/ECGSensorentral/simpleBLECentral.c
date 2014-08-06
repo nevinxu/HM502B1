@@ -22,7 +22,7 @@
 
 // Length of bd addr as a string
 #define B_ADDR_STR_LEN                        15
-#define HAL_UART_PORT                         HAL_UART_PORT_1
+#define UART_PORT                         HAL_UART_PORT_1
 
 /*********************************************************************
  * CONSTANTS
@@ -303,8 +303,8 @@ void SimpleBLECentral_Init( uint8 task_id )
   RegisterForKeys( simpleBLETaskId );
   
   // makes sure LEDs are off
- // HalLedSet( (HAL_LED_1 | HAL_LED_2), HAL_LED_MODE_OFF );
-  
+  HalLedSet( (HAL_LED_1), HAL_LED_MODE_ON ); 
+  HalLedSet( (HAL_LED_2), HAL_LED_MODE_ON ); 
   // Setup a delayed profile startup
   osal_set_event( simpleBLETaskId, START_DEVICE_EVT );
   
@@ -313,7 +313,7 @@ void SimpleBLECentral_Init( uint8 task_id )
   #ifdef UARTDEBUG
   memset(SerialApp_Buf,0,sizeof(SerialApp_Buf));
   strcpy(SerialApp_Buf,"\r\nBLECentral  Start............");
-  HalUARTWrite(HAL_UART_PORT, SerialApp_Buf,sizeof(SerialApp_Buf));  
+  HalUARTWrite(UART_PORT, SerialApp_Buf,sizeof(SerialApp_Buf));  
   #endif
  }
 /******************************************************************************/
@@ -1375,7 +1375,7 @@ void usb_uart_open(void)
   uartConfig.intEnable            = TRUE;              
   uartConfig.callBackFunc         = (halUARTCBack_t)&usb_uart_rx_cback;
   
-  HalUARTOpen (HAL_UART_PORT, &uartConfig);
+  HalUARTOpen (UART_PORT, &uartConfig);
 } 
 /******************************************************************************/
 void usb_uart_rx_cback(uint8 port, uint8 event)
