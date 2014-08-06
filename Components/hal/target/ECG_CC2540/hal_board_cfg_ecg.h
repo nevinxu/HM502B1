@@ -389,8 +389,8 @@ extern "C"
 /* Set to TRUE enable UART usage, FALSE disable it */
 #ifndef HAL_UART
 #define HAL_UART TRUE       
-#define HAL_UART_ISR  2
-#define HAL_UART_DMA  0
+#define HAL_UART_ISR  0
+#define HAL_UART_DMA  2
 #define HAL_UART_USB  0
 #endif
 

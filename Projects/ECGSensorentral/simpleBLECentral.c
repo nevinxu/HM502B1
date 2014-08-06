@@ -191,6 +191,8 @@ static __xdata bool simpleBLEProcedureInProgress = FALSE;
 
 static __xdata uint8 CommandFlag;   //命令接收标志
 
+uint8 ECGSensor_TaskID; 
+
 /*********************************************************************
  * LOCAL FUNCTIONS
  */
