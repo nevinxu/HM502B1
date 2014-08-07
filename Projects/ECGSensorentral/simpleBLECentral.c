@@ -312,7 +312,7 @@ void SimpleBLECentral_Init( uint8 task_id )
   usb_uart_open();
   #ifdef UARTDEBUG
   memset(SerialApp_Buf,0,sizeof(SerialApp_Buf));
-  strcpy(SerialApp_Buf,"\r\nBLECentral  Start............");
+  strcpy(SerialApp_Buf,"BLECentral  Start............\r\n");
   HalUARTWrite(UART_PORT, SerialApp_Buf,sizeof(SerialApp_Buf));  
   #endif
  }
@@ -377,7 +377,7 @@ uint16 SimpleBLECentral_ProcessEvent( uint8 task_id, uint16 events )
 
     // Register with bond manager after starting device
     GAPBondMgr_Register( (gapBondCBs_t *) &simpleBLEBondCB );
-    osal_start_timerEx(simpleBLETaskId, UARTSEND_EVT,DEFAULT_UARTSEND_PERIOD);   //串口发送定时器
+//    osal_start_timerEx(simpleBLETaskId, UARTSEND_EVT,DEFAULT_UARTSEND_PERIOD);   //串口发送定时器
     return ( events ^ START_DEVICE_EVT );
   }
   /******************************************************************************/
@@ -387,20 +387,20 @@ uint16 SimpleBLECentral_ProcessEvent( uint8 task_id, uint16 events )
     return ( events ^ START_DISCOVERY_EVT );
   }
   /******************************************************************************/
-  if ( events & UARTSEND_EVT )
-  {
-    if(CommandFlag ==  DEVICESTART)
-    {
-      CommandFlag = 0;
-      #ifdef UARTDEBUG
-      memset(SerialApp_Buf,0,sizeof(SerialApp_Buf));
-      strcpy(SerialApp_Buf,"HM502B");   //start command
-      HalUARTWrite(HAL_UART_PORT, SerialApp_Buf,sizeof(SerialApp_Buf));   
-      #endif
-    }
-    osal_start_timerEx(simpleBLETaskId, UARTSEND_EVT,DEFAULT_UARTSEND_PERIOD);
-    return ( events ^ UARTSEND_EVT );
-  }
+//  if ( events & UARTSEND_EVT )
+//  {
+//    if(CommandFlag ==  DEVICESTART)
+//    {
+//      CommandFlag = 0;
+//      #ifdef UARTDEBUG
+//      memset(SerialApp_Buf,0,sizeof(SerialApp_Buf));
+//      strcpy(SerialApp_Buf,"HM502B");   //start command
+//      HalUARTWrite(HAL_UART_PORT, SerialApp_Buf,sizeof(SerialApp_Buf));   
+//      #endif
+//    }
+//    osal_start_timerEx(simpleBLETaskId, UARTSEND_EVT,DEFAULT_UARTSEND_PERIOD);
+//    return ( events ^ UARTSEND_EVT );
+//  }
   // Discard unknown events
   return 0;
 }
@@ -790,12 +790,12 @@ static void simpleBLECentralEventCB( gapCentralRoleEvent_t *pEvent )
   {
     case GAP_DEVICE_INIT_DONE_EVENT:  
       {
-        #ifdef UARTDEBUG
-        memset(SerialApp_Buf,0,sizeof(SerialApp_Buf));
-        strcpy(SerialApp_Buf,"BLE Central MAC: ");
-        strcat(SerialApp_Buf,bdAddr2Str( pEvent->initDone.devAddr ) );
-        HalUARTWrite(HAL_UART_PORT, SerialApp_Buf,sizeof(SerialApp_Buf)); 
-        #endif 
+//        #ifdef UARTDEBUG
+//        memset(SerialApp_Buf,0,sizeof(SerialApp_Buf));
+//        strcpy(SerialApp_Buf,"BLE Central MAC: ");
+//        strcat(SerialApp_Buf,bdAddr2Str( pEvent->initDone.devAddr ) );
+//        HalUARTWrite(HAL_UART_PORT, SerialApp_Buf,sizeof(SerialApp_Buf)); 
+//        #endif 
       }
       break;
 
@@ -1430,7 +1430,7 @@ void usb_uart_rx_cback(uint8 port, uint8 event)
         }
         else if('F' == SerialApp_Buf[5])   //串口开始连接命令
         {
-          CommandFlag = DEVICESTART;
+//          CommandFlag = DEVICESTART;
         }
         else if('G' == SerialApp_Buf[5])   //关闭连接的设备
         {
